@@ -1,2 +1,5 @@
-fuel/app/logs/*/*/*
-fuel/app/cache/*/*
+/generator
+/vendor
+composer.lock
+composer.phar
+phpunit.xml
