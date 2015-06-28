@@ -33,7 +33,7 @@ class ChargeRequestTest extends TestCase
 
         $request = $request->xpath('//ns3:CalculateFeeRequest');
         $plc = $request[0]->xpath('ns3:plc');
-        $amounts = $request[0]->xpath('ns3:amounts');
+        $amounts = $request[0]->xpath('ns3:amounts/ns3:amount');
 
         $this->assertNotNull($request[0]);
         $this->assertEquals('9995', (string) $plc[0]);
