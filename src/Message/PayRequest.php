@@ -8,7 +8,7 @@ use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\GovPayNet\Common\GovPayNetCard;
 
-class PayRequest extends DefaultRequest
+class PayRequest extends AbstractRequest
 {
     /**
      * Get the raw data array for this message. The format of this varies from gateway to

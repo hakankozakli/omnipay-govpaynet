@@ -2,9 +2,7 @@
 
 namespace Omnipay\GovPayNet\Message;
 
-use Omnipay\Common\Message\AbstractRequest;
-
-abstract class DefaultRequest extends AbstractRequest
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     /**
      * @var string

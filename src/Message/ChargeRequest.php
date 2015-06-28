@@ -6,7 +6,7 @@ use Guzzle\Http\Exception\ClientErrorResponseException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
 
-class ChargeRequest extends DefaultRequest
+class ChargeRequest extends AbstractRequest
 {
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
