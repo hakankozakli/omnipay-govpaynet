@@ -28,8 +28,10 @@ class ChargeResponse extends AbstractResponse
      */
     public function getPlc()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:plc')[0])
-            ? (string) $this->data->xpath($this->namespace . '/ns2:plc')[0]
+        $plc = $this->data->xpath($this->namespace . '/ns2:plc');
+
+        return isset($plc[0])
+            ? (string) $plc[0]
             : null;
     }
 
@@ -40,8 +42,10 @@ class ChargeResponse extends AbstractResponse
      */
     public function getFeeAmount()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:feeAmount')[0])
-            ? (string) $this->data->xpath($this->namespace . '/ns2:feeAmount')[0]
+        $feeAmount = $this->data->xpath($this->namespace . '/ns2:feeAmount');
+
+        return isset($feeAmount[0])
+            ? (string) $feeAmount[0]
             : null;
     }
 
@@ -52,8 +56,10 @@ class ChargeResponse extends AbstractResponse
      */
     public function getTotalAmount()
     {
-        return isset($this->data->xpath($this->namespace . '//ns2:totalAmount')[0])
-            ? (string) $this->data->xpath($this->namespace . '/ns2:totalAmount')[0]
+        $totalAmount = $this->data->xpath($this->namespace . '//ns2:totalAmount');
+
+        return isset($totalAmount[0])
+            ? (string) $totalAmount[0]
             : null;
     }
 }

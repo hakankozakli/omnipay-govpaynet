@@ -326,7 +326,9 @@ class PayRequest extends DefaultRequest
         $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
 
-        if (!isset($xmlResponse->xpath('//ns2:PayResponse')[0])) {
+        $payResponse = $xmlResponse->xpath('//ns2:PayResponse');
+
+        if (!isset($payResponse[0])) {
             throw new InvalidResponseException('Invalid XML response');
         }
 

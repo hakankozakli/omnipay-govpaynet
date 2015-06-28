@@ -20,7 +20,9 @@ class PayResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->xpath($this->namespace)[0]) && $this->getCode() == static::RESPONSE_CODE_SUCCESSFUL;
+        $payResponse = $this->data->xpath($this->namespace);
+
+        return isset($payResponse[0]) && $this->getCode() == static::RESPONSE_CODE_SUCCESSFUL;
     }
 
     /**
@@ -30,8 +32,10 @@ class PayResponse extends AbstractResponse
      */
     public function getCode()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:code')[0])
-            ? (string) $this->data->xpath($this->namespace . '//ns2:code')[0]
+        $code = $this->data->xpath($this->namespace . '/ns2:code');
+
+        return isset($code[0])
+            ? (string) $code[0]
             : null;
     }
 
@@ -42,8 +46,10 @@ class PayResponse extends AbstractResponse
      */
     public function getMessage()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:message')[0])
-            ? (string) $this->data->xpath($this->namespace . '//ns2:message')[0]
+        $message = $this->data->xpath($this->namespace . '/ns2:message');
+
+        return isset($message[0])
+            ? (string) $message[0]
             : null;
     }
 
@@ -54,8 +60,10 @@ class PayResponse extends AbstractResponse
      */
     public function getTransactionReferenceId()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:transactionReferenceId')[0])
-            ? (string) $this->data->xpath($this->namespace . '//ns2:transactionReferenceId')[0]
+        $transactionReferenceId = $this->data->xpath($this->namespace . '/ns2:transactionReferenceId');
+
+        return isset($transactionReferenceId[0])
+            ? (string) $transactionReferenceId[0]
             : null;
     }
 
@@ -66,8 +74,10 @@ class PayResponse extends AbstractResponse
      */
     public function getCardAuthCode()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:cardAuthCode')[0])
-            ? (string) $this->data->xpath($this->namespace . '//ns2:cardAuthCode')[0]
+        $cardAuthCode = $this->data->xpath($this->namespace . '/ns2:cardAuthCode');
+
+        return isset($cardAuthCode[0])
+            ? (string) $cardAuthCode[0]
             : null;
     }
 
@@ -78,8 +88,10 @@ class PayResponse extends AbstractResponse
      */
     public function getAmountAuthorized()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:amountAuthorized')[0])
-            ? (string) $this->data->xpath($this->namespace . '//ns2:amountAuthorized')[0]
+        $amountAuthorized = $this->data->xpath($this->namespace . '/ns2:amountAuthorized');
+
+        return isset($amountAuthorized[0])
+            ? (string) $amountAuthorized[0]
             : null;
     }
 }

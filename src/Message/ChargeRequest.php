@@ -87,7 +87,9 @@ class ChargeRequest extends DefaultRequest
         $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
 
-        if (!isset($xmlResponse->xpath('//ns2:CalculateFeeResponse')[0])) {
+        $calculateFeeResponse = $xmlResponse->xpath('//ns2:CalculateFeeResponse');
+
+        if (!isset($calculateFeeResponse[0])) {
             throw new InvalidResponseException('Invalid XML response');
         }
 

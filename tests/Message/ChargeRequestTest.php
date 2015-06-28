@@ -31,8 +31,12 @@ class ChargeRequestTest extends TestCase
         $request->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
         $request->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
 
-        $this->assertNotNull($request->xpath('//ns3:CalculateFeeRequest')[0]);
-        $this->assertEquals('9995', (string) $request->xpath('//ns3:CalculateFeeRequest/ns3:plc')[0]);
-        $this->assertEquals('123.40', (string) $request->xpath('//ns3:CalculateFeeRequest/ns3:amounts')[0]->xpath('ns3:amount')[0]);
+        $request = $request->xpath('//ns3:CalculateFeeRequest');
+        $plc = $request[0]->xpath('ns3:plc');
+        $amounts = $request[0]->xpath('ns3:amounts');
+
+        $this->assertNotNull($request[0]);
+        $this->assertEquals('9995', (string) $plc[0]);
+        $this->assertEquals('123.40', (string) $amounts[0]->xpath('ns3:amount')[0]);
     }
 }
