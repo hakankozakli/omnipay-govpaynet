@@ -62,9 +62,11 @@ class PayRequestTest extends TestCase
 
         $payRequest = $request->xpath('//ns3:PayRequest');
 
+        $plc = $payRequest[0]->xpath('ns3:plc');
+        $amount = $payRequest[0]->xpath('ns3:amounts/ns3:amount/ns2:amount');
         $this->assertNotNull($payRequest[0]);
-        $this->assertEquals('9995', (string) $payRequest[0]->xpath('ns3:plc')[0]);
-        $this->assertEquals('78.90', (string) $payRequest[0]->xpath('ns3:amounts/ns3:amount/ns2:amount')[0]);
+        $this->assertEquals('9995', (string) $plc[0]);
+        $this->assertEquals('78.90', (string) $amount[0]);
 
         $field1 = $payRequest[0]->xpath('//ns3:PayRequest/ns3:payLocationPaymentInformation/ns3:fields/ns3:field');
         $first = $field1[0]->xpath('ns2:value/ns2:defendant/ns2:first');
