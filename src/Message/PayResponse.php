@@ -30,7 +30,9 @@ class PayResponse extends AbstractResponse
      */
     public function getCode()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:code')[0]) ? (string) $this->data->xpath($this->namespace . '//ns2:code')[0] : null;
+        return isset($this->data->xpath($this->namespace . '/ns2:code')[0])
+            ? (string) $this->data->xpath($this->namespace . '//ns2:code')[0]
+            : null;
     }
 
     /**
@@ -40,7 +42,9 @@ class PayResponse extends AbstractResponse
      */
     public function getMessage()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:message')[0]) ? (string) $this->data->xpath($this->namespace . '//ns2:message')[0] : null;
+        return isset($this->data->xpath($this->namespace . '/ns2:message')[0])
+            ? (string) $this->data->xpath($this->namespace . '//ns2:message')[0]
+            : null;
     }
 
     /**
@@ -50,7 +54,9 @@ class PayResponse extends AbstractResponse
      */
     public function getTransactionReferenceId()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:transactionReferenceId')[0]) ? (string) $this->data->xpath($this->namespace . '//ns2:transactionReferenceId')[0] : null;
+        return isset($this->data->xpath($this->namespace . '/ns2:transactionReferenceId')[0])
+            ? (string) $this->data->xpath($this->namespace . '//ns2:transactionReferenceId')[0]
+            : null;
     }
 
     /**
@@ -60,7 +66,9 @@ class PayResponse extends AbstractResponse
      */
     public function getCardAuthCode()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:cardAuthCode')[0]) ? (string) $this->data->xpath($this->namespace . '//ns2:cardAuthCode')[0] : null;
+        return isset($this->data->xpath($this->namespace . '/ns2:cardAuthCode')[0])
+            ? (string) $this->data->xpath($this->namespace . '//ns2:cardAuthCode')[0]
+            : null;
     }
 
     /**
@@ -70,7 +78,8 @@ class PayResponse extends AbstractResponse
      */
     public function getAmountAuthorized()
     {
-        return isset($this->data->xpath($this->namespace . '/ns2:amountAuthorized')[0]) ? (string) $this->data->xpath($this->namespace . '//ns2:amountAuthorized')[0] : null;
+        return isset($this->data->xpath($this->namespace . '/ns2:amountAuthorized')[0])
+            ? (string) $this->data->xpath($this->namespace . '//ns2:amountAuthorized')[0]
+            : null;
     }
-
 }

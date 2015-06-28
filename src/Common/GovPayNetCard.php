@@ -22,7 +22,7 @@ class GovPayNetCard extends CreditCard
     {
         $brand = parent::getBrand();
 
-        if(array_key_exists($brand, static::$brands)) {
+        if (array_key_exists($brand, static::$brands)) {
             return static::$brands[$brand];
         }
 

@@ -29,9 +29,9 @@ class PayRequest extends DefaultRequest
 
         $card = $this->getCard();
 
-        if($card instanceof GovPayNetCard) {
+        if ($card instanceof GovPayNetCard) {
             // Force validation if not in test mode
-            if(!$this->getTestMode()) {
+            if (!$this->getTestMode()) {
                 $card->validate();
             }
         } else {
@@ -319,14 +319,14 @@ class PayRequest extends DefaultRequest
         try {
             $httpResponse = $httpRequest->send();
             $xmlResponse = $httpResponse->xml()->children('http://schemas.xmlsoap.org/soap/envelope/');
-        } catch(ClientErrorResponseException $e) {
+        } catch (ClientErrorResponseException $e) {
             throw $e;
         }
 
         $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
 
-        if(!isset($xmlResponse->xpath('//ns2:PayResponse')[0])) {
+        if (!isset($xmlResponse->xpath('//ns2:PayResponse')[0])) {
             throw new InvalidResponseException('Invalid XML response');
         }
 

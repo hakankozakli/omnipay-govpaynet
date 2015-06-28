@@ -80,15 +80,14 @@ class ChargeRequest extends DefaultRequest
             $httpResponse = $httpRequest->send();
             $xmlResponse = $httpResponse->xml()
                 ->children('http://schemas.xmlsoap.org/soap/envelope/');
-
-        } catch(ClientErrorResponseException $e) {
+        } catch (ClientErrorResponseException $e) {
             throw $e;
         }
 
         $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
 
-        if(!isset($xmlResponse->xpath('//ns2:CalculateFeeResponse')[0])) {
+        if (!isset($xmlResponse->xpath('//ns2:CalculateFeeResponse')[0])) {
             throw new InvalidResponseException('Invalid XML response');
         }
 
