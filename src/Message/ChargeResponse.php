@@ -18,7 +18,8 @@ class ChargeResponse extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->xpath($this->namespace)[0]);
+        $namespace = $this->data->xpath($this->namespace);
+        return isset($namespace[0]);
     }
 
     /**
