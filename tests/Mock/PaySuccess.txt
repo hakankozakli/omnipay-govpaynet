@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Server: nginx/1.6.0
+Date: Sun, 28 Jun 205 12:45:51 GMT
+Content-Type: text/xml; charset=utf-8
+Connection: keep-alive
+Keep-Alive: timeout=60
+Cache-Control: private, max-age=0
+
+<?xml version="1.0"?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:PayResponse xmlns:ns2="http://payments.govpaynow.com/ws-soap/schemas/payment" xmlns:ns3="http://payments.govpaynow.com/ws-soap/schemas/payment-types"><ns2:code>PAY-0</ns2:code><ns2:message>Approved</ns2:message><ns2:transactionReferenceId>10601058</ns2:transactionReferenceId><ns2:cardAuthCode>11111 </ns2:cardAuthCode><ns2:amountAuthorized>32.00</ns2:amountAuthorized></ns2:PayResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
