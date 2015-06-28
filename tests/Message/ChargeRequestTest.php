@@ -37,6 +37,6 @@ class ChargeRequestTest extends TestCase
 
         $this->assertNotNull($request[0]);
         $this->assertEquals('9995', (string) $plc[0]);
-        $this->assertEquals('123.40', (string) $amounts[0]->xpath('ns3:amount')[0]);
+        $this->assertEquals('123.40', (string) $amounts[0]);
     }
 }
