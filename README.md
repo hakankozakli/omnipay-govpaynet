@@ -1,7 +1,5 @@
 # Omnipay: GovPayNet
 
-## ATTENTION - UNDER DEVELOPMENT - DO NOT USE!!!
-
 **Driver for the Omnipay PHP payment processing library**
 
 [![Build Status](https://travis-ci.org/steadweb/omnipay-govpaynet.svg?branch=feature%2Frewrite)](https://travis-ci.org/steadweb/omnipay-govpaynet)
