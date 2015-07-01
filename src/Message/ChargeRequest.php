@@ -1,11 +1,17 @@
-<?php
-
-namespace Omnipay\GovPayNet\Message;
+<?php namespace Omnipay\GovPayNet\Message;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
 
+/**
+ * @package    Omnipay\GovPayNet
+ *
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
+ */
 class ChargeRequest extends AbstractRequest
 {
     /**

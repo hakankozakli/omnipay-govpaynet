@@ -1,6 +1,4 @@
-<?php
-
-namespace Omnipay\GovPayNet\Message;
+<?php namespace Omnipay\GovPayNet\Message;
 
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Omnipay\Common\Exception\InvalidCreditCardException;
@@ -8,6 +6,14 @@ use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
 use Omnipay\GovPayNet\Common\GovPayNetCard;
 
+/**
+ * @package    Omnipay\GovPayNet
+ *
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
+ */
 class PayRequest extends AbstractRequest
 {
     /**

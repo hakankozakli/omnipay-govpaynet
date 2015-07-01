@@ -1,13 +1,14 @@
-<?php
-
-namespace Omnipay\GovPayNet;
+<?php namespace Omnipay\GovPayNet;
 
 use Omnipay\Common\AbstractGateway;
 
 /**
- * GovPayNet Gateway
+ * @package    Omnipay\GovPayNet
  *
- * This gateway is used to interact with the US payment service GovPayNet, popular in US government.
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
  */
 class Gateway extends AbstractGateway
 {

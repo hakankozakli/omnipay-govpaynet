@@ -1,7 +1,13 @@
-<?php
+<?php namespace Omnipay\GovPayNet\Message;
 
-namespace Omnipay\GovPayNet\Message;
-
+/**
+ * @package    Omnipay\GovPayNet
+ *
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
+ */
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
     /**
