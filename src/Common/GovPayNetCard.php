@@ -1,16 +1,25 @@
-<?php
-
-namespace Omnipay\GovPayNet\Common;
+<?php namespace Omnipay\GovPayNet\Common;
 
 use Omnipay\Common\CreditCard;
 
+/**
+ * @package    Omnipay\GovPayNet
+ *
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
+ */
 class GovPayNetCard extends CreditCard
 {
     /**
      * @var array
      */
     protected static $brands = array(
-        CreditCard::BRAND_VISA => 'VI'
+        CreditCard::BRAND_VISA => 'VI',
+        CreditCard::BRAND_AMEX => 'AX',
+        CreditCard::BRAND_DISCOVER => 'DI',
+        CreditCard::BRAND_MASTERCARD => 'MC'
     );
 
     /**

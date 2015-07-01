@@ -1,9 +1,15 @@
-<?php
-
-namespace Omnipay\GovPayNet\Message;
+<?php namespace Omnipay\GovPayNet\Message;
 
 use Omnipay\Tests\TestCase;
 
+/**
+ * @package    Omnipay\GovPayNet
+ *
+ * @copyright  Flexcoders Ltd
+ *
+ * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     FlexCoders Ltd, London, UK
+ */
 class PayResponseTest extends TestCase
 {
     public function testSuccess()
