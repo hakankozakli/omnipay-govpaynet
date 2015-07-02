@@ -1,7 +1,4 @@
-<?php namespace Omnipay\GovPayNet\Common;
-
-use Omnipay\Common\CreditCard;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -10,6 +7,10 @@ use Omnipay\Common\CreditCard;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet\Common;
+
+use Omnipay\Common\CreditCard;
+
 class GovPayNetCard extends CreditCard
 {
     /**

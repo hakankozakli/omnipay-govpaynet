@@ -1,11 +1,4 @@
-<?php namespace Omnipay\GovPayNet\Message;
-
-use Guzzle\Http\Exception\ClientErrorResponseException;
-use Omnipay\Common\Exception\InvalidCreditCardException;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\ResponseInterface;
-use Omnipay\GovPayNet\Common\GovPayNetCard;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -14,6 +7,15 @@ use Omnipay\GovPayNet\Common\GovPayNetCard;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet\Message;
+
+use DOMDocument;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Omnipay\Common\Exception\InvalidCreditCardException;
+use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\GovPayNet\Common\GovPayNetCard;
+
 class PayRequest extends AbstractRequest
 {
     /**
@@ -44,7 +46,7 @@ class PayRequest extends AbstractRequest
             throw new InvalidCreditCardException('$card must be an instance of GovPayNetCard');
         }
 
-        $document = new \DOMDocument('1.0', 'utf-8');
+        $document = new DOMDocument('1.0', 'utf-8');
         $document->formatOutput = false;
 
         $envelope = $document->appendChild(

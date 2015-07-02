@@ -1,7 +1,4 @@
-<?php namespace Omnipay\GovPayNet\Message;
-
-use Omnipay\Common\Message\AbstractResponse;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -10,6 +7,10 @@ use Omnipay\Common\Message\AbstractResponse;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet\Message;
+
+use Omnipay\Common\Message\AbstractResponse;
+
 class PayResponse extends AbstractResponse
 {
     /**

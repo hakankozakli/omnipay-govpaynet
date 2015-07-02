@@ -1,7 +1,4 @@
-<?php namespace Omnipay\GovPayNet;
-
-use Omnipay\Tests\GatewayTestCase;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -10,6 +7,10 @@ use Omnipay\Tests\GatewayTestCase;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet;
+
+use Omnipay\Tests\GatewayTestCase;
+
 class GatewayTest extends GatewayTestCase
 {
     /**

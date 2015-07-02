@@ -1,9 +1,4 @@
-<?php namespace Omnipay\GovPayNet\Message;
-
-use Guzzle\Http\Exception\ClientErrorResponseException;
-use Omnipay\Common\Exception\InvalidResponseException;
-use Omnipay\Common\Message\ResponseInterface;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -12,6 +7,13 @@ use Omnipay\Common\Message\ResponseInterface;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet\Message;
+
+use DOMDocument;
+use Guzzle\Http\Exception\ClientErrorResponseException;
+use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Common\Message\ResponseInterface;
+
 class ChargeRequest extends AbstractRequest
 {
     /**
@@ -27,7 +29,7 @@ class ChargeRequest extends AbstractRequest
             'amount'
         );
 
-        $document = new \DOMDocument('1.0', 'utf-8');
+        $document = new DOMDocument('1.0', 'utf-8');
         $document->formatOutput = false;
 
         $envelope = $document->appendChild(

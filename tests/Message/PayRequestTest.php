@@ -1,8 +1,4 @@
-<?php namespace Omnipay\GovPayNet\Message;
-
-use Omnipay\GovPayNet\Common\GovPayNetCard;
-use Omnipay\Tests\TestCase;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -11,6 +7,12 @@ use Omnipay\Tests\TestCase;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet\Message;
+
+use Omnipay\GovPayNet\Common\GovPayNetCard;
+use Omnipay\Tests\TestCase;
+use SimpleXMLElement;
+
 class PayRequestTest extends TestCase
 {
     /**
@@ -62,7 +64,7 @@ class PayRequestTest extends TestCase
     {
         $data = $this->request->getData();
 
-        $request = new \SimpleXMLElement($data);
+        $request = new SimpleXMLElement($data);
         $request->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
         $request->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
 

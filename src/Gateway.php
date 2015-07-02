@@ -1,7 +1,4 @@
-<?php namespace Omnipay\GovPayNet;
-
-use Omnipay\Common\AbstractGateway;
-
+<?php
 /**
  * @package    Omnipay\GovPayNet
  *
@@ -10,6 +7,10 @@ use Omnipay\Common\AbstractGateway;
  * @author     Luke Steadman <ljsteadman@gmail.com>
  * @author     FlexCoders Ltd, London, UK
  */
+namespace Omnipay\GovPayNet;
+
+use Omnipay\Common\AbstractGateway;
+
 class Gateway extends AbstractGateway
 {
     /**
