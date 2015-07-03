@@ -1,12 +1,8 @@
 # Omnipay: GovPayNet
 
-## ATTENTION - UNDER DEVELOPMENT - DO NOT USE!!!
-
 **Driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/flexcoders/omnipay-govpaynet.png?branch=master)](https://travis-ci.org/flexcoders/omnipay-govpaynet)
-[![Latest Stable Version](https://poser.pugx.org/flexcoders/omnipay-govpaynet/version.png)](https://packagist.org/packages/flexcoders/omnipay-govpaynet)
-[![Total Downloads](https://poser.pugx.org/flexcoders/omnipay-govpaynet/o/total.png)](https://packagist.org/packages/flexcoders/omnipay-govpaynet)
+[![Build Status](https://travis-ci.org/steadweb/omnipay-govpaynet.svg?branch=feature%2Frewrite)](https://travis-ci.org/steadweb/omnipay-govpaynet)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Dummy support for Omnipay.

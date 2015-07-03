@@ -21,10 +21,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Omnipay\\GovPayNet\\" : "src/"
-        },
-        "classmap": {
-            "FlexCoders\\GovPayNet\\" : "soap/"
+            "Omnipay\\GovPayNet\\" : ["src/"]
         }
     },
     "require": {
