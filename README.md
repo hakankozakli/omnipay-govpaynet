@@ -2,7 +2,7 @@
 
 **Driver for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/steadweb/omnipay-govpaynet.svg?branch=feature%2Frewrite)](https://travis-ci.org/steadweb/omnipay-govpaynet)
+[![Build Status](https://travis-ci.org/FlexCoders/omnipay-govpaynet.svg?branch=feature%2Frewrite)](https://travis-ci.org/steadweb/omnipay-govpaynet)
 
 [Omnipay](https://github.com/thephpleague/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Dummy support for Omnipay.
