@@ -66,7 +66,9 @@ class PayRequest extends AbstractRequest
 
         $payRequest->setAttribute('xmlns:ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $payRequest->setAttribute('xmlns:ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
-        $payRequest->setAttribute('xsi:schemaLocation', 'http://payments.govpaynow.com/ws-soap/schemas/payment ../../main/webapp/schemas/payment-messages.xsd');
+        $payRequest->setAttribute('xsi:schemaLocation', '
+            http://payments.govpaynow.com/ws-soap/schemas/payment ../../main/webapp/schemas/payment-messages.xsd
+        ');
 
         $payRequest->appendChild(
             $document->createElement('ns:plc', $this->getPlc())
