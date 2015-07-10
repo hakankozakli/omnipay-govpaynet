@@ -53,20 +53,20 @@ class PayRequest extends AbstractRequest
             $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 's:Envelope')
         );
 
-        $envelope->appendChild(
-            $document->createElement('s:Header')
-        );
-
         $body = $envelope->appendChild(
             $document->createElement('s:Body')
         );
+
+        $body->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $body->setAttribute('xmlns:xsd', 'http://www.w3.org/2001/XMLSchema');
 
         $payRequest = $body->appendChild(
             $document->createElement('ns:PayRequest')
         );
 
-        $payRequest->setAttribute('xmlns:ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
         $payRequest->setAttribute('xmlns:ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
+        $payRequest->setAttribute('xmlns:ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
+        $payRequest->setAttribute('xsi:schemaLocation', 'http://payments.govpaynow.com/ws-soap/schemas/payment ../../main/webapp/schemas/payment-messages.xsd');
 
         $payRequest->appendChild(
             $document->createElement('ns:plc', $this->getPlc())
@@ -148,8 +148,12 @@ class PayRequest extends AbstractRequest
             $document->createElement('ns1:name', 'Address')
         );
 
-        $nameFieldAddressValue =  $nameFieldAddress->appendChild(
-            $document->createElement('ns1.value')
+        $address = $nameFieldAddress->appendChild(
+            $document->createElement('ns1:value')
+        );
+
+        $nameFieldAddressValue =  $address->appendChild(
+            $document->createElement('ns1:address')
         );
 
         $nameFieldAddressValue->appendChild(
@@ -185,7 +189,7 @@ class PayRequest extends AbstractRequest
         );
 
         $nameFieldEmailValue->appendChild(
-            $document->createElement('ns1.alphanum', $this->getCard()->getEmail())
+            $document->createElement('ns1:alphanum', $this->getCard()->getEmail())
         );
 
         $nameFieldPhone = $fields->appendChild(
@@ -196,8 +200,12 @@ class PayRequest extends AbstractRequest
             $document->createElement('ns1:name', 'Phone #')
         );
 
-        $nameFieldPhoneValue = $nameFieldPhone->appendChild(
+        $phone = $nameFieldPhone->appendChild(
             $document->createElement('ns1:value')
+        );
+
+        $nameFieldPhoneValue = $phone->appendChild(
+            $document->createElement('ns1:phoneNumber')
         );
 
         $nameFieldPhoneValue->appendChild(
@@ -212,24 +220,8 @@ class PayRequest extends AbstractRequest
             $document->createElement('ns1:suffix', $this->getCard()->getPhoneSuffix())
         );
 
-        $nameFieldNote = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
-
-        $nameFieldNote->appendChild(
-            $document->createElement('ns1:name', 'Notes')
-        );
-
-        $notes = $nameFieldNote->appendChild(
-            $document->createElement('ns1:value')
-        );
-
-        $notes->appendChild(
-            $document->createElement('ns1:alphanum', $this->getNotes())
-        );
-
         $billingName = $payRequest->appendChild(
-            $document->createElement('ns1:billingName')
+            $document->createElement('ns:billingName')
         );
 
         $billingName->appendChild(
@@ -248,8 +240,7 @@ class PayRequest extends AbstractRequest
             $document->createElement('ns:billingAddress')
         );
 
-        $billingAddress->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $billingAddress->setAttribute('xsi:type', 'ns2:USAddress');
+        $billingAddress->setAttribute('xsi:type', 'ns1:USAddress');
 
         $billingAddress->appendChild(
             $document->createElement('ns1:street', $card->getBillingAddress1())
@@ -289,22 +280,6 @@ class PayRequest extends AbstractRequest
 
         $billingCard->appendChild(
             $document->createElement('ns1:expiration', $card->getExpiryDate('my'))
-        );
-
-        $billingPhone = $payRequest->appendChild(
-            $document->createElement('ns:billingPhone')
-        );
-
-        $billingPhone->appendChild(
-            $document->createElement('ns1:areaCode', $card->getPhoneAreaCode())
-        );
-
-        $billingPhone->appendChild(
-            $document->createElement('ns1:prefix', $card->getPhonePrefix())
-        );
-
-        $billingPhone->appendChild(
-            $document->createElement('ns1:suffix', $card->getPhoneSuffix())
         );
 
         return $document->saveXML();
@@ -440,10 +415,8 @@ class PayRequest extends AbstractRequest
             throw $e;
         }
 
-        $xmlResponse->registerXPathNamespace('ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
-        $xmlResponse->registerXPathNamespace('ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
-
-        var_dump($xmlResponse->saveXML());exit;
+        $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
+        $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
 
         $payResponse = $xmlResponse->xpath('//ns2:PayResponse');
 
