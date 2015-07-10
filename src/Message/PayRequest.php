@@ -50,173 +50,261 @@ class PayRequest extends AbstractRequest
         $document->formatOutput = false;
 
         $envelope = $document->appendChild(
-            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 'SOAP-ENV:Envelope')
+            $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 's:Envelope')
         );
 
         $envelope->appendChild(
-            $document->createElement('SOAP-ENV:Header')
+            $document->createElement('s:Header')
         );
 
         $body = $envelope->appendChild(
-            $document->createElement('SOAP-ENV:Body')
+            $document->createElement('s:Body')
         );
 
         $payRequest = $body->appendChild(
-            $document->createElement('ns3:PayRequest')
+            $document->createElement('ns:PayRequest')
         );
 
-        $payRequest->setAttribute('xmlns:ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
-        $payRequest->setAttribute('xmlns:ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
+        $payRequest->setAttribute('xmlns:ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
+        $payRequest->setAttribute('xmlns:ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
 
         $payRequest->appendChild(
-            $document->createElement('ns3:plc', $this->getPlc())
+            $document->createElement('ns:plc', $this->getPlc())
         );
 
         $amounts = $payRequest->appendChild(
-            $document->createElement('ns3:amounts')
+            $document->createElement('ns:amounts')
         );
 
         $amount = $amounts->appendChild(
-            $document->createElement('ns3:amount')
+            $document->createElement('ns:amount')
         );
 
         $amount->appendChild(
-            $document->createElement('ns2:amount', $this->getAmount())
+            $document->createElement('ns1:amount', $this->getAmount())
         );
 
         $amount->appendChild(
-            $document->createElement('ns2:amountId', 1)
+            $document->createElement('ns1:amountId', 1)
         );
 
         $payLocationPaymentInformation = $payRequest->appendChild(
-            $document->createElement('ns3:payLocationPaymentInformation')
+            $document->createElement('ns:payLocationPaymentInformation')
         );
 
         $fields = $payLocationPaymentInformation->appendChild(
-            $document->createElement('ns3:fields')
+            $document->createElement('ns:fields')
         );
 
         $nameFieldName = $fields->appendChild(
-            $document->createElement('ns3:field')
+            $document->createElement('ns:field')
         );
 
         $nameFieldName->appendChild(
-            $document->createElement('ns2:name', 'Name')
+            $document->createElement('ns1:name', 'Name')
         );
 
         $nameFieldValue = $nameFieldName->appendChild(
-            $document->createElement('ns2:value')
+            $document->createElement('ns1:value')
         );
 
         $defendant = $nameFieldValue->appendChild(
-            $document->createElement('ns2:defendant')
+            $document->createElement('ns1:defendant')
         );
 
         $defendant->appendChild(
-            $document->createElement('ns2:first', $this->getDefendantFirstName())
+            $document->createElement('ns1:first', $this->getDefendantFirstName())
         );
 
         $defendant->appendChild(
-            $document->createElement('ns2:middle', $this->getDefendantMiddleName())
+            $document->createElement('ns1:middle', $this->getDefendantMiddleName())
         );
 
         $defendant->appendChild(
-            $document->createElement('ns2:last', $this->getDefendantLastName())
+            $document->createElement('ns1:last', $this->getDefendantLastName())
+        );
+
+        $nameFieldBusiness = $fields->appendChild(
+            $document->createElement('ns:field')
+        );
+
+        $nameFieldBusiness->appendChild(
+            $document->createElement('ns1:name', 'Business Name')
+        );
+
+        $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
+            $document->createElement('ns1:value')
+        );
+
+        $nameFieldBusinessValue->appendChild(
+            $document->createElement('ns1:alphanum', $this->getBusinessName())
+        );
+
+        $nameFieldAddress = $fields->appendChild(
+            $document->createElement('ns:field')
+        );
+
+        $nameFieldAddress->appendChild(
+            $document->createElement('ns1:name', 'Address')
+        );
+
+        $nameFieldAddressValue =  $nameFieldAddress->appendChild(
+            $document->createElement('ns1.value')
+        );
+
+        $nameFieldAddressValue->appendChild(
+            $document->createElement('ns1:street', $this->getCard()->getAddress1())
+        );
+
+        $nameFieldAddressValue->appendChild(
+            $document->createElement('ns1:street2', $this->getCard()->getAddress2())
+        );
+
+        $nameFieldAddressValue->appendChild(
+            $document->createElement('ns1:city', $this->getCard()->getCity())
+        );
+
+        $nameFieldAddressValue->appendChild(
+            $document->createElement('ns1:zip', $this->getCard()->getPostcode())
+        );
+
+        $nameFieldAddressValue->appendChild(
+            $document->createElement('ns1:state', $this->getCard()->getState())
+        );
+
+        $nameFieldEmail = $fields->appendChild(
+            $document->createElement('ns:field')
+        );
+
+        $nameFieldEmail->appendChild(
+            $document->createElement('ns1:name', 'Email')
+        );
+
+        $nameFieldEmailValue = $nameFieldEmail->appendChild(
+            $document->createElement('ns1:value')
+        );
+
+        $nameFieldEmailValue->appendChild(
+            $document->createElement('ns1.alphanum', $this->getCard()->getEmail())
+        );
+
+        $nameFieldPhone = $fields->appendChild(
+            $document->createElement('ns:field')
+        );
+
+        $nameFieldPhone->appendChild(
+            $document->createElement('ns1:name', 'Phone #')
+        );
+
+        $nameFieldPhoneValue = $nameFieldPhone->appendChild(
+            $document->createElement('ns1:value')
+        );
+
+        $nameFieldPhoneValue->appendChild(
+            $document->createElement('ns1:areaCode', $this->getCard()->getPhoneAreaCode())
+        );
+
+        $nameFieldPhoneValue->appendChild(
+            $document->createElement('ns1:prefix', $this->getCard()->getPhonePrefix())
+        );
+
+        $nameFieldPhoneValue->appendChild(
+            $document->createElement('ns1:suffix', $this->getCard()->getPhoneSuffix())
         );
 
         $nameFieldNote = $fields->appendChild(
-            $document->createElement('ns3:field')
+            $document->createElement('ns:field')
         );
 
         $nameFieldNote->appendChild(
-            $document->createElement('ns2:name', 'Notes')
+            $document->createElement('ns1:name', 'Notes')
         );
 
         $notes = $nameFieldNote->appendChild(
-            $document->createElement('ns2:value')
+            $document->createElement('ns1:value')
         );
 
         $notes->appendChild(
-            $document->createElement('ns2:alphanum', $this->getNotes())
+            $document->createElement('ns1:alphanum', $this->getNotes())
         );
 
         $billingName = $payRequest->appendChild(
-            $document->createElement('ns3:billingName')
+            $document->createElement('ns1:billingName')
         );
 
         $billingName->appendChild(
-            $document->createElement('ns2:first', $card->getFirstName())
+            $document->createElement('ns1:first', $card->getFirstName())
         );
 
         $billingName->appendChild(
-            $document->createElement('ns2:middle', $card->getMiddleName())
+            $document->createElement('ns1:middle', $card->getMiddleName())
         );
 
         $billingName->appendChild(
-            $document->createElement('ns2:last', $card->getLastName())
+            $document->createElement('ns1:last', $card->getLastName())
         );
 
         $billingAddress = $payRequest->appendChild(
-            $document->createElement('ns3:billingAddress')
+            $document->createElement('ns:billingAddress')
         );
 
         $billingAddress->setAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $billingAddress->setAttribute('xsi:type', 'ns2:USAddress');
 
         $billingAddress->appendChild(
-            $document->createElement('ns2:street', $card->getBillingAddress1())
+            $document->createElement('ns1:street', $card->getBillingAddress1())
         );
 
         $billingAddress->appendChild(
-            $document->createElement('ns2:street2', $card->getBillingAddress2())
+            $document->createElement('ns1:street2', $card->getBillingAddress2())
         );
 
         $billingAddress->appendChild(
-            $document->createElement('ns2:city', $card->getBillingCity())
+            $document->createElement('ns1:city', $card->getBillingCity())
         );
 
         $billingAddress->appendChild(
-            $document->createElement('ns2:zip', $card->getBillingPostcode())
+            $document->createElement('ns1:zip', $card->getBillingPostcode())
         );
 
         $billingAddress->appendChild(
-            $document->createElement('ns2:state', $card->getBillingState())
+            $document->createElement('ns1:state', $card->getBillingState())
         );
 
         $billingCard = $payRequest->appendChild(
-            $document->createElement('ns3:billingCard')
+            $document->createElement('ns:billingCard')
         );
 
         $billingCard->appendChild(
-            $document->createElement('ns2:type', $card->getBrand())
+            $document->createElement('ns1:type', $card->getBrand())
         );
 
         $billingCard->appendChild(
-            $document->createElement('ns2:number', $card->getNumber())
+            $document->createElement('ns1:number', $card->getNumber())
         );
 
         $billingCard->appendChild(
-            $document->createElement('ns2:securityCode', $card->getCvv())
+            $document->createElement('ns1:securityCode', $card->getCvv())
         );
 
         $billingCard->appendChild(
-            $document->createElement('ns2:expiration', $card->getExpiryDate('my'))
+            $document->createElement('ns1:expiration', $card->getExpiryDate('my'))
         );
 
         $billingPhone = $payRequest->appendChild(
-            $document->createElement('ns3:billingPhone')
+            $document->createElement('ns:billingPhone')
         );
 
         $billingPhone->appendChild(
-            $document->createElement('ns2:areaCode', $card->getPhoneAreaCode())
+            $document->createElement('ns1:areaCode', $card->getPhoneAreaCode())
         );
 
         $billingPhone->appendChild(
-            $document->createElement('ns2:prefix', $card->getPhonePrefix())
+            $document->createElement('ns1:prefix', $card->getPhonePrefix())
         );
 
         $billingPhone->appendChild(
-            $document->createElement('ns2:suffix', $card->getPhoneSuffix())
+            $document->createElement('ns1:suffix', $card->getPhoneSuffix())
         );
 
         return $document->saveXML();
@@ -307,6 +395,27 @@ class PayRequest extends AbstractRequest
     }
 
     /**
+     * Get the business name value
+     *
+     * @return string
+     */
+    public function getBusinessName()
+    {
+        return $this->getParameter('businessName');
+    }
+
+    /**
+     * Set the business name value
+     *
+     * @param $value
+     * @return string
+     */
+    public function setBusinessName($value)
+    {
+        return $this->setParameter('businessName', $value);
+    }
+
+    /**
      * Send the request with specified data
      *
      * @param  mixed $data The data to send
@@ -331,8 +440,10 @@ class PayRequest extends AbstractRequest
             throw $e;
         }
 
-        $xmlResponse->registerXPathNamespace('ns2', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
-        $xmlResponse->registerXPathNamespace('ns3', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
+        $xmlResponse->registerXPathNamespace('ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
+        $xmlResponse->registerXPathNamespace('ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
+
+        var_dump($xmlResponse->saveXML());exit;
 
         $payResponse = $xmlResponse->xpath('//ns2:PayResponse');
 
