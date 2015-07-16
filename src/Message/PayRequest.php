@@ -44,7 +44,7 @@ class PayRequest extends AbstractRequest
         }
 
         $document = new DOMDocument('1.0', 'utf-8');
-        $document->formatOutput = true;
+        $document->formatOutput = falses;
 
         $envelope = $document->appendChild(
             $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 's:Envelope')
