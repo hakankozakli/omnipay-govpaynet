@@ -29,10 +29,7 @@ class PayRequest extends AbstractRequest
     {
         $this->validate(
             'plc',
-            'card',
-            'defendantFirstName',
-            'defendantLastName',
-            'notes'
+            'card'
         );
 
         $card = $this->getCard();
@@ -47,7 +44,7 @@ class PayRequest extends AbstractRequest
         }
 
         $document = new DOMDocument('1.0', 'utf-8');
-        $document->formatOutput = false;
+        $document->formatOutput = true;
 
         $envelope = $document->appendChild(
             $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 's:Envelope')
@@ -131,7 +128,7 @@ class PayRequest extends AbstractRequest
         );
 
         $nameFieldBusiness->appendChild(
-            $document->createElement('ns1:name', 'Business Name')
+            $document->createElement('ns1:name', 'Server Id')
         );
 
         $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
@@ -139,87 +136,7 @@ class PayRequest extends AbstractRequest
         );
 
         $nameFieldBusinessValue->appendChild(
-            $document->createElement('ns1:alphanum', $this->getBusinessName())
-        );
-
-        $nameFieldAddress = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
-
-        $nameFieldAddress->appendChild(
-            $document->createElement('ns1:name', 'Address')
-        );
-
-        $address = $nameFieldAddress->appendChild(
-            $document->createElement('ns1:value')
-        );
-
-        $nameFieldAddressValue =  $address->appendChild(
-            $document->createElement('ns1:address')
-        );
-
-        $nameFieldAddressValue->appendChild(
-            $document->createElement('ns1:street', $this->getCard()->getAddress1())
-        );
-
-        $nameFieldAddressValue->appendChild(
-            $document->createElement('ns1:street2', $this->getCard()->getAddress2())
-        );
-
-        $nameFieldAddressValue->appendChild(
-            $document->createElement('ns1:city', $this->getCard()->getCity())
-        );
-
-        $nameFieldAddressValue->appendChild(
-            $document->createElement('ns1:zip', $this->getCard()->getPostcode())
-        );
-
-        $nameFieldAddressValue->appendChild(
-            $document->createElement('ns1:state', $this->getCard()->getState())
-        );
-
-        $nameFieldEmail = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
-
-        $nameFieldEmail->appendChild(
-            $document->createElement('ns1:name', 'Email')
-        );
-
-        $nameFieldEmailValue = $nameFieldEmail->appendChild(
-            $document->createElement('ns1:value')
-        );
-
-        $nameFieldEmailValue->appendChild(
-            $document->createElement('ns1:alphanum', $this->getCard()->getEmail())
-        );
-
-        $nameFieldPhone = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
-
-        $nameFieldPhone->appendChild(
-            $document->createElement('ns1:name', 'Phone #')
-        );
-
-        $phone = $nameFieldPhone->appendChild(
-            $document->createElement('ns1:value')
-        );
-
-        $nameFieldPhoneValue = $phone->appendChild(
-            $document->createElement('ns1:phoneNumber')
-        );
-
-        $nameFieldPhoneValue->appendChild(
-            $document->createElement('ns1:areaCode', $this->getCard()->getPhoneAreaCode())
-        );
-
-        $nameFieldPhoneValue->appendChild(
-            $document->createElement('ns1:prefix', $this->getCard()->getPhonePrefix())
-        );
-
-        $nameFieldPhoneValue->appendChild(
-            $document->createElement('ns1:suffix', $this->getCard()->getPhoneSuffix())
+            $document->createElement('ns1:alphanum', $this->getServerId())
         );
 
         $billingName = $payRequest->appendChild(
@@ -372,24 +289,24 @@ class PayRequest extends AbstractRequest
     }
 
     /**
-     * Get the business name value
+     * Get the server id value
      *
      * @return string
      */
-    public function getBusinessName()
+    public function getServerId()
     {
-        return $this->getParameter('businessName');
+        return $this->getParameter('serverId');
     }
 
     /**
-     * Set the business name value
+     * Set the server id value
      *
      * @param $value
      * @return string
      */
-    public function setBusinessName($value)
+    public function setServerId($value)
     {
-        return $this->setParameter('businessName', $value);
+        return $this->setParameter('serverId', $value);
     }
 
     /**
