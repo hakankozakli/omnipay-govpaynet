@@ -2,9 +2,9 @@
 /**
  * @package    Omnipay\GovPayNet
  *
- * @copyright  Flexcoders Ltd
+ * @copyright  FlexCoders Ltd, 2015
  *
- * @author     Luke Steadman <ljsteadman@gmail.com>
+ * @author     Luke Steadman <luke.steadman@flexcoders.co.uk>
  * @author     FlexCoders Ltd, London, UK
  */
 namespace Omnipay\GovPayNet\Common;
