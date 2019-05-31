@@ -65,7 +65,7 @@ class PayResponse extends AbstractResponse
      *
      * @return null|string
      */
-    public function getTransactionReferenceId()
+    public function getTransactionReference()
     {
         $transactionReferenceId = $this->data->xpath($this->namespace . '/ns2:transactionReferenceId');
 
@@ -79,7 +79,7 @@ class PayResponse extends AbstractResponse
      *
      * @return null|string
      */
-    public function getCardAuthCode()
+    public function getAuthorizationCode()
     {
         $cardAuthCode = $this->data->xpath($this->namespace . '/ns2:cardAuthCode');
 

@@ -10,6 +10,7 @@
 namespace Omnipay\GovPayNet\Message;
 
 use DOMDocument;
+use Omnipay\Common\CreditCard;
 use Guzzle\Http\Exception\ClientErrorResponseException;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidResponseException;
@@ -18,6 +19,30 @@ use Omnipay\GovPayNet\Common\GovPayNetCard;
 
 class PayRequest extends AbstractRequest
 {
+    protected static $brands = array(
+        CreditCard::BRAND_VISA => 'VI',
+        CreditCard::BRAND_AMEX => 'AX',
+        CreditCard::BRAND_DISCOVER => 'DI',
+        CreditCard::BRAND_MASTERCARD => 'MC'
+    );
+
+    /**
+     * Override the brand returned
+     *
+     * @return string
+     */
+    public function getBrand2()
+    {
+        $card = $this->getCard();
+        $brand = $card->getBrand();
+
+        if (array_key_exists($brand, static::$brands)) {
+            return static::$brands[$brand];
+        }
+
+        return $brand;
+    }
+
     /**
      * Get the raw data array for this message. The format of this varies from gateway to
      * gateway, but will usually be either an associative array, or a SimpleXMLElement.
@@ -34,14 +59,14 @@ class PayRequest extends AbstractRequest
 
         $card = $this->getCard();
 
-        if ($card instanceof GovPayNetCard) {
+        //if ($card instanceof GovPayNetCard) {
             // Force validation if not in test mode
             if (!$this->getTestMode()) {
                 $card->validate();
             }
-        } else {
+        /*} else {
             throw new InvalidCreditCardException('$card must be an instance of GovPayNetCard');
-        }
+        }*/
 
         $document = new DOMDocument('1.0', 'utf-8');
         $document->formatOutput = false;
@@ -50,6 +75,17 @@ class PayRequest extends AbstractRequest
             $document->createElementNS('http://schemas.xmlsoap.org/soap/envelope/', 's:Envelope')
         );
 
+        /*$header = $envelope->appendChild(
+            $document->createElement('s:Header')
+        );
+
+        $agree = $header->appendChild(
+            $document->createElement('ns:Action')
+        );
+
+        $agree->setAttribute('s:mustUnderstand', '1');
+        $agree->setAttribute('xmlns', 'http://schemas.microsoft.com/ws/2005/05/addressing/none');
+        */
         $body = $envelope->appendChild(
             $document->createElement('s:Body')
         );
@@ -63,9 +99,7 @@ class PayRequest extends AbstractRequest
 
         $payRequest->setAttribute('xmlns:ns', 'http://payments.govpaynow.com/ws-soap/schemas/payment');
         $payRequest->setAttribute('xmlns:ns1', 'http://payments.govpaynow.com/ws-soap/schemas/payment-types');
-        $payRequest->setAttribute('xsi:schemaLocation', '
-            http://payments.govpaynow.com/ws-soap/schemas/payment ../../main/webapp/schemas/payment-messages.xsd
-        ');
+        //$payRequest->setAttribute('xsi:schemaLocation', 'http://payments.govpaynow.com/ws-soap/schemas/payment ../../main/webapp/schemas/payment-messages.xsd');
 
         $payRequest->appendChild(
             $document->createElement('ns:plc', $this->getPlc())
@@ -95,49 +129,111 @@ class PayRequest extends AbstractRequest
             $document->createElement('ns:fields')
         );
 
-        $nameFieldName = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
+        if($this->getDefendantFirstName()){
+            $nameFieldName = $fields->appendChild(
+                $document->createElement('ns:field')
+            );
 
-        $nameFieldName->appendChild(
-            $document->createElement('ns1:name', 'Name')
-        );
+            $nameFieldName->appendChild(
+                $document->createElement('ns1:name', 'Name')
+            );
 
-        $nameFieldValue = $nameFieldName->appendChild(
-            $document->createElement('ns1:value')
-        );
+            $nameFieldValue = $nameFieldName->appendChild(
+                $document->createElement('ns1:value')
+            );
 
-        $defendant = $nameFieldValue->appendChild(
-            $document->createElement('ns1:defendant')
-        );
+            $defendant = $nameFieldValue->appendChild(
+                $document->createElement('ns1:defendant')
+            );
 
-        $defendant->appendChild(
-            $document->createElement('ns1:first', $this->getDefendantFirstName())
-        );
+            $defendant->appendChild(
+                $document->createElement('ns1:first', $this->getDefendantFirstName())
+            );
 
-        $defendant->appendChild(
-            $document->createElement('ns1:middle', $this->getDefendantMiddleName())
-        );
+            $defendant->appendChild(
+                $document->createElement('ns1:middle', $this->getDefendantMiddleName())
+            );
 
-        $defendant->appendChild(
-            $document->createElement('ns1:last', $this->getDefendantLastName())
-        );
+            $defendant->appendChild(
+                $document->createElement('ns1:last', $this->getDefendantLastName())
+            );
+        }
 
-        $nameFieldBusiness = $fields->appendChild(
-            $document->createElement('ns:field')
-        );
+        if($this->getServerId()){
 
-        $nameFieldBusiness->appendChild(
-            $document->createElement('ns1:name', 'Server Id')
-        );
+            $nameFieldBusiness = $fields->appendChild(
+                $document->createElement('ns:field')
+            );
 
-        $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
-            $document->createElement('ns1:value')
-        );
+            $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:name', 'Server Id')
+            );
 
-        $nameFieldBusinessValue->appendChild(
-            $document->createElement('ns1:alphanum', $this->getServerId())
-        );
+            $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:value')
+            );
+
+            $nameFieldBusinessValue->appendChild(
+                $document->createElement('ns1:alphanum', $this->getServerId())
+            );
+        }
+
+        if($this->getInvoiceNum()){
+
+            $nameFieldBusiness = $fields->appendChild(
+                $document->createElement('ns:field')
+            );
+
+            $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:name', 'InvoiceNum')
+            );
+
+            $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:value')
+            );
+
+            $nameFieldBusinessValue->appendChild(
+                $document->createElement('ns1:alphanum', $this->getInvoiceNum())
+            );
+        }
+
+        if($this->getPublicationNum()){
+
+            $nameFieldBusiness = $fields->appendChild(
+                $document->createElement('ns:field')
+            );
+
+            $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:name', 'PublicationNum')
+            );
+
+            $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:value')
+            );
+
+            $nameFieldBusinessValue->appendChild(
+                $document->createElement('ns1:alphanum', $this->getPublicationNum())
+            );
+        }
+
+        if($this->getTransactionNum()){
+
+            $nameFieldBusiness = $fields->appendChild(
+                $document->createElement('ns:field')
+            );
+
+            $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:name', 'TransactionNum')
+            );
+
+            $nameFieldBusinessValue = $nameFieldBusiness->appendChild(
+                $document->createElement('ns1:value')
+            );
+
+            $nameFieldBusinessValue->appendChild(
+                $document->createElement('ns1:alphanum', $this->getTransactionNum())
+            );
+        }
 
         $billingName = $payRequest->appendChild(
             $document->createElement('ns:billingName')
@@ -148,7 +244,7 @@ class PayRequest extends AbstractRequest
         );
 
         $billingName->appendChild(
-            $document->createElement('ns1:middle', $card->getMiddleName())
+            $document->createElement('ns1:middle', $this->getMiddleName())
         );
 
         $billingName->appendChild(
@@ -186,7 +282,7 @@ class PayRequest extends AbstractRequest
         );
 
         $billingCard->appendChild(
-            $document->createElement('ns1:type', $card->getBrand())
+            $document->createElement('ns1:type', $this->getBrand2())
         );
 
         $billingCard->appendChild(
@@ -256,6 +352,17 @@ class PayRequest extends AbstractRequest
         return $this->getParameter('defendantMiddleName');
     }
 
+
+/**
+     * Get the defendant middle name value
+     *
+     * @return string
+     */
+    public function getMiddleName()
+    {
+        return $this->getParameter('middleName');
+    }
+
     /**
      * Set the defendant middle name value
      *
@@ -309,6 +416,70 @@ class PayRequest extends AbstractRequest
         return $this->setParameter('serverId', $value);
     }
 
+
+    /**
+     * Get the server id value
+     *
+     * @return string
+     */
+    public function getInvoiceNum()
+    {
+        return $this->getParameter('invoiceNum');
+    }
+
+    /**
+     * Set the server id value
+     *
+     * @param $value
+     * @return string
+     */
+    public function setInvoiceNum($value)
+    {
+        return $this->setParameter('invoiceNum', $value);
+    }
+
+    /**
+     * Get the server id value
+     *
+     * @return string
+     */
+    public function getPublicationNum()
+    {
+        return $this->getParameter('publicationNum');
+    }
+
+    /**
+     * Set the server id value
+     *
+     * @param $value
+     * @return string
+     */
+    public function setPublicationNum($value)
+    {
+        return $this->setParameter('publicationNum', $value);
+    }
+
+    /**
+     * Get the server id value
+     *
+     * @return string
+     */
+    public function getTransactionNum()
+    {
+        return $this->getParameter('transactionNum');
+    }
+
+    /**
+     * Set the server id value
+     *
+     * @param $value
+     * @return string
+     */
+    public function setTransactionNum($value)
+    {
+        return $this->setParameter('transactionNum', $value);
+    }
+
     /**
      * Send the request with specified data
      *
@@ -322,7 +493,7 @@ class PayRequest extends AbstractRequest
         $headers = array(
             'Content-Type' => 'text/xml; charset=utf-8'
         );
-
+        
         $httpRequest = $this->httpClient
             ->createRequest('POST', $this->getEndpoint(), $headers, $data)
             ->setAuth($this->getUsername(), $this->getPassword());
