@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    Omnipay\GovPayNet
- *
+ * Test
  * @copyright  FlexCoders Ltd, 2015
  *
  * @author     Luke Steadman <luke.steadman@flexcoders.co.uk>
