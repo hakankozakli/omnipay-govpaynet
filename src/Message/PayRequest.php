@@ -296,6 +296,22 @@ class PayRequest extends AbstractRequest
         $billingCard->appendChild(
             $document->createElement('ns1:expiration', $card->getExpiryDate('my'))
         );
+        
+        $billingPhone = $payRequest->appendChild(
+            $document->createElement('ns:billingPhone')
+        );
+
+        $billingPhone->appendChild(
+            $document->createElement('ns1:areaCode', "000")
+        );
+
+        $billingPhone->appendChild(
+            $document->createElement('ns1:prefix', "000")
+        );
+
+        $billingPhone->appendChild(
+            $document->createElement('ns1:suffix', "0000")
+        );
 
         return $document->saveXML();
     }
